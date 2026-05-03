@@ -1,9 +1,9 @@
 cask "brave-origin@nightly" do
-  version "1.92.4"
-  sha256 "1d37e0cc107d93259fe199dad185da09e0b94b18a692da1f97e88243c17a9c09"
-
+  version "1.92.10"
+  sha256 "2cec2e6679fbf010d022b1ad5fd217deb1eb2f364037e76e003ed0dda551d95b"
   url "https://github.com/brave/brave-browser/releases/download/v#{version}/Brave-Origin-Nightly-arm64.dmg",
       verified: "github.com/brave/brave-browser/"
+
   name "Brave Origin Nightly"
   desc "Privacy-focused web browser with non-essential Brave features removed"
   homepage "https://brave.com/origin/download-nightly/"

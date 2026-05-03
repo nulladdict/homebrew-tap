@@ -1,10 +1,11 @@
 class Plannotator < Formula
+  version "0.19.7"
+  sha256 "bef6afbf9a11d09eb7cef39ab31c6267f49ab442ef0ea9b85687f7039bb7cc16"
+  url "https://github.com/backnotprop/plannotator/releases/download/v#{version}/plannotator-darwin-arm64",
+      using: :nounzip
+
   desc "Interactive plan and code review for AI coding agents"
   homepage "https://plannotator.ai/"
-  url "https://github.com/backnotprop/plannotator/releases/download/v0.19.5/plannotator-darwin-arm64",
-      using: :nounzip
-  version "0.19.5"
-  sha256 "ca4b6662788a8af85a6cd0828d338ee962b46cb9f3833062672e87106a8caca2"
   license "Apache-2.0"
 
   livecheck do
