@@ -1,6 +1,6 @@
 class Plannotator < Formula
-  version "0.19.7"
-  sha256 "bef6afbf9a11d09eb7cef39ab31c6267f49ab442ef0ea9b85687f7039bb7cc16"
+  version "0.19.8"
+  sha256 "6922a24bdf1ee135fd30faff78a0a39b83656d04a3ccb122adf3490a14631566"
   url "https://github.com/backnotprop/plannotator/releases/download/v#{version}/plannotator-darwin-arm64",
       using: :nounzip
 

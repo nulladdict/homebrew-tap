@@ -1,14 +1,24 @@
 #!/usr/bin/env -S uv run
 
 import re
+from http.client import HTTPResponse
 from pathlib import Path
+from typing import cast
+from urllib.request import urlopen
 
-import httpx
 from pydantic import BaseModel
 
 
 class Release(BaseModel):
     tag_name: str
+
+
+def http_get(url: str) -> str:
+    response = cast("HTTPResponse", urlopen(url, timeout=30))
+    with response:
+        body = response.read()
+        charset = response.headers.get_content_charset() or "utf-8"
+        return body.decode(charset)
 
 
 for path in sorted((*Path("Formula").glob("*.rb"), *Path("Casks").glob("*.rb"))):
@@ -27,23 +37,22 @@ for path in sorted((*Path("Formula").glob("*.rb"), *Path("Casks").glob("*.rb")))
     livecheck_url = re.search(r'url "([^"]+)"', livecheck)
 
     if livecheck_url:
-        response = httpx.get(livecheck_url.group(1)).raise_for_status()
-        latest = response.text.strip()
+        latest = http_get(livecheck_url.group(1)).strip()
     else:
         repo_match = re.search(r"github\.com/([^/]+/[^/]+)/", url)
         assert repo_match is not None
-        response = httpx.get(
+        response_text = http_get(
             f"https://api.github.com/repos/{repo_match.group(1)}/releases/latest"
-        ).raise_for_status()
-        latest = Release.model_validate_json(response.text).tag_name.removeprefix("v")
+        )
+        latest = Release.model_validate_json(response_text).tag_name.removeprefix("v")
 
     if latest == current:
         print(f"{path}: current ({current})")
         continue
 
     new_url = url.replace("#{version}", latest).replace(current, latest)
-    response = httpx.get(f"{new_url}.sha256").raise_for_status()
-    sha_match = re.match(r"\s*([a-fA-F0-9]{64})\b", response.text)
+    sha_text = http_get(f"{new_url}.sha256")
+    sha_match = re.match(r"\s*([a-fA-F0-9]{64})\b", sha_text)
     assert sha_match is not None
 
     new = text.replace(current, latest)
