@@ -1,6 +1,6 @@
 cask "brave-origin@nightly" do
-  version "1.93.8"
-  sha256 "2c2d341dcdddcfd873d375385409eb1cc7b5d2114b2f662add15df5d2aad7841"
+  version "1.93.30"
+  sha256 "75047f0c97a27ea587064ae2e6b7afcbb5b902a833bbe90ae9024a7d2150e66a"
   url "https://github.com/brave/brave-browser/releases/download/v#{version}/Brave-Origin-Nightly-arm64.dmg",
       verified: "github.com/brave/brave-browser/"
 
